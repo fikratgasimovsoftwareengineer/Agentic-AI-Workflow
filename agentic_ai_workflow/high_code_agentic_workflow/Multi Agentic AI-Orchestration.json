@@ -1,0 +1,183 @@
+{
+  "name": "Multi Agentic AI-Orchestration",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9485406a-6a52-4684-a094-dbc6b43227b5",
+      "name": "When chat message received",
+      "webhookId": "5bb5efcb-3734-468f-88c5-fe10cc696bb6"
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        576,
+        288
+      ],
+      "id": "6d28973d-bbd1-486a-a750-bfdb793dab8c",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "P510bCoSn7X13SWJ",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Sei un Copywriter Senior. Il cliente ti ha chiesto di scrivere un testo: {{ $json.chatInput }}.Scrivi una prima bozza professionale e creativa. Non aggiungere spiegazioni, fornisci solo la bozza"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ec9398e9-2ed8-4477-b911-af264a5c7da5",
+      "name": "Agente 1 - Creatore",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Sei un Direttore Creativo spietato. Valuta questo bozza di testo: {{ $json.text}}. Il tuo compito NON e` riscrivere il testo, ma elencare esattamente 3 critiche costruittive per migliorarlo (es. \"Manca una call to action\", \"Il tono è troppo noioso\"). Sii breve e diretto."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        576,
+        0
+      ],
+      "id": "1c57070f-3a9d-4791-8571-0863800dd8d8",
+      "name": "Agente 2: Critico"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Riscrivi il testo in modo perfetto applicando queste direttive.\n\nBozza Originale:\n{{ $('Agente 1 - Creatore').item.json.text }}\n\nCritiche da applicare:\n{{ $json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Sei editore FInale. Hai a disposizione la bozza origin: {{ $ ('Agent 1: Creatore').item.json.text }}  e i commenti del direttore creativo. Bozza originale.Critiche da applicare: {{ $json.text }}. Devi riscrivere la bozza originale completamente applicando in modo perfetto le critiche. Fornisci solo il risultato finale, pronto per essere pubblicato."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        992,
+        0
+      ],
+      "id": "bf0bf101-db6d-4654-84bd-41d135dd6d99",
+      "name": "Agente 3: Revisore"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Agente 1 - Creatore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente 1 - Creatore",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente 2: Critico",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente 3: Revisore",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente 1 - Creatore": {
+      "main": [
+        [
+          {
+            "node": "Agente 2: Critico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente 2: Critico": {
+      "main": [
+        [
+          {
+            "node": "Agente 3: Revisore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6d222bd6-9e38-4ab9-a946-e46af6f567f3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "47080712d15c2f342ea953437857eec393b4d931617c0a13bd791d86730691c9"
+  },
+  "id": "xt3cITfHNiYyq6ED",
+  "tags": [
+    {
+      "name": "V1",
+      "id": "T8TxYogVR3k2TVPX",
+      "updatedAt": "2026-04-22T16:55:34.719Z",
+      "createdAt": "2026-04-22T16:55:34.719Z"
+    }
+  ]
+}

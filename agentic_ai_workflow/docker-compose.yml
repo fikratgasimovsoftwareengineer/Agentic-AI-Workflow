@@ -1,10 +1,20 @@
 version: '3.8'
 
-volumes:
-  n8n_data:
-    name: n8n_data
-
 services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    restart: always
+    dns:
+     - 8.8.8.8
+     - 1.1.1.1
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - n8n-network
+
   n8n:
     image: docker.n8n.io/n8nio/n8n
     container_name: n8n
@@ -20,3 +30,15 @@ services:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
     volumes:
       - n8n_data:/home/node/.n8n
+    networks:
+      - n8n-network
+    depends_on:
+      - ollama
+
+networks:
+  n8n-network:
+    driver: bridge
+
+volumes:
+  n8n_data:
+  ollama_data:
