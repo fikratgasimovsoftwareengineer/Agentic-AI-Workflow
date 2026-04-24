@@ -1,43 +1,28 @@
-version: '3.8'
-
 services:
   ollama:
     image: ollama/ollama
     container_name: ollama
     restart: always
-    dns:
-     - 8.8.8.8
-     - 1.1.1.1
-    ports:
-      - "11434:11434"
+    network_mode: host
     volumes:
       - ollama_data:/root/.ollama
-    networks:
-      - n8n-network
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
 
   n8n:
     image: docker.n8n.io/n8nio/n8n
     container_name: n8n
     restart: always
-    ports:
-      - "5678:5678"
+    network_mode: host
     environment:
-      - N8N_HOST=${SUBDOMAIN:-localhost}
+      - N8N_HOST=localhost
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       - NODE_ENV=production
-      - WEBHOOK_URL=${WEBHOOK_URL}
-      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
     volumes:
       - n8n_data:/home/node/.n8n
-    networks:
-      - n8n-network
     depends_on:
       - ollama
-
-networks:
-  n8n-network:
-    driver: bridge
 
 volumes:
   n8n_data:
