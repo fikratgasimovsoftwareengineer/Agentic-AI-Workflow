@@ -1,3 +1,8 @@
+## Commando:
+```sh
+ngrok http 5678
+```
+```sh
 services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
@@ -21,3 +26,4 @@ services:
 
 volumes:
   n8n_data:
+```

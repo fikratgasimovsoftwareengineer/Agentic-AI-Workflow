@@ -1,0 +1,209 @@
+{
+  "name": "Whatsapp Test Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        176
+      ],
+      "id": "00188c0a-0eee-4a33-ac13-8865ceda213c",
+      "name": "WhatsApp Trigger",
+      "webhookId": "05923257-42a4-481b-adda-00b17a06465c",
+      "alwaysOutputData": false,
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "pAQrIR6vzL5WDIvI",
+          "name": "WhatsApp OAuth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json.messages[0].text.body}}",
+        "options": {
+          "systemMessage": "## Core behavior\n- Be concise. WhatsApp is a messaging app — keep responses short and to the point.\n- Never use markdown formatting (no **bold**, no bullet points with -, no headers). Use plain text only.\n- Use line breaks to separate ideas instead.\n- Always respond in the same language the user writes in.\n\n## Your capabilities\n- Answer questions and provide information\n- Help plan tasks, schedules, and to-do lists\n- Draft messages, emails, and texts\n- Give reminders and suggestions\n- Brainstorm ideas\n- Summarize information\n\n## Personality\n- Friendly but professional\n- Direct and efficient — no unnecessary filler phrases\n- Never say \"Certainly!\", \"Of course!\", \"Absolutely!\" or similar hollow affirmations\n- Get straight to the answer\n##Capabilities\n\n- **Send_Mail**: use this tool to send well-formatted emails with proper greeting and closign\n- **WikiPedia**: use this tool to look up general knowledge  and factual informations.\n## Limitations\n- You don't have access to real-time data unless told otherwise\n- If you don't know something, say so clearly instead of guessing\n- Never make up facts or figures\n\n## Important\n- Keep responses under 200 words unless the user asks for something detailed\n- If a request is unclear, ask one clarifying question — not multiple\n- Remember context from earlier in the conversation\n\n## time and date: {{$now}}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -192,
+        176
+      ],
+      "id": "026d80fb-f09b-4603-9800-a54048b04879",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        384
+      ],
+      "id": "677e928f-7d61-44c9-93ad-74d4edea3364",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "hKap0qbdFGF2UHBY",
+          "name": "Ollama account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id}}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        384
+      ],
+      "id": "21219536-3abe-4918-96db-b626b0930546",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1030608900144898",
+        "recipientPhoneNumber": "+393518829719",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {
+          "previewUrl": true
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        176
+      ],
+      "id": "de81b48c-a465-4377-9825-4f325413ffdf",
+      "name": "Send message",
+      "webhookId": "6bcddaed-c936-41a1-bd72-9586841f42c5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kQo6WfSOL72ACqp0",
+          "name": "WhatsApp account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        144,
+        368
+      ],
+      "id": "a03600de-b2fa-4a80-97ab-af3b1cf12208",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        400
+      ],
+      "id": "c1f988c7-8117-4ee9-8508-f9c2100ba61b",
+      "name": "Wikipedia"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b26db7ff-0a71-49cd-9f0d-73abaeeef22b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e247e29dfc777feb8e388a36e503680524f948d34118b65ec4a63e2fed72e899"
+  },
+  "id": "uNe2xwBga8qyMyqT",
+  "tags": []
+}
