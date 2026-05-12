@@ -12,7 +12,9 @@ The goal of the project is to showcase how an AI Agent can autonomously interact
 # Architecture
 
 ![Image](https://images.openai.com/static-rsc-4/ERuXMJjTN8GOBV3n64tDXzS5KHkLGmGF63JLjKAV7fYdvG8jlU47tHaUlEZ1oqxyoTzDdwUq9LdkCK6ipLLCI1F9-Gdp7yCt8wO7wk4JbczR5PgPZKnDlRvJWzAQLgYrtE-7BbNrvkbVR5suBrCBJoxEI9rsLTeN9gueXnvnqarewtgeY8dIxmFDBZLbFH_j?purpose=fullsize)
+# Watsap Bot Conversation 
 
+![Image](/home/fikrat/Agentic-AI-Workflow/agentic_ai_workflow/low_code_agentic_ai/assets/AI_Agent_watsap_1.png)
 
 The workflow is composed of the following nodes:
 
