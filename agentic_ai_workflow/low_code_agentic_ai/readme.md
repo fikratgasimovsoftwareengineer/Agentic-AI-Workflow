@@ -13,6 +13,7 @@ The system integrates WhatsApp messaging, a locally hosted Large Language Model 
 The goal of the project is to showcase how an AI Agent can autonomously interact with users, maintain conversational context, use external tools when needed, and generate intelligent responses inside a messaging platform.
 
 ---
+**PLEASE REFER TO JSON FILE ATTACHED : DOWNLOAD AND OPEN IT IN N8N PLATFORM TO GET TECHNICAL INSIGHTS** [Scarica il documento](Intelligent_WatsapBot_Uninettuno_Segreteria/Fully_Autonomous_WatsapBOT.json)
 
 # Architecture
 
@@ -24,8 +25,7 @@ The goal of the project is to showcase how an AI Agent can autonomously interact
 <img src="assets/AI_Agent_watsap_3.png" width="600"/> 
 <img src="assets/AI_Agent_watsap_4.png" width="600"/> 
 
-**PLEASE REFER TO JSON FILE ATTACHED : DOWNLOAD AND OPEN IT IN N8N PLATFORM TO GET TECHNICAL INSIGHTS**
-[Scarica il documento](Intelligent_WatsapBot_Uninettuno_Segreteria/Fully_Autonomous_WatsapBOT.json)
+
 
 The workflow is composed of the following nodes:
 
