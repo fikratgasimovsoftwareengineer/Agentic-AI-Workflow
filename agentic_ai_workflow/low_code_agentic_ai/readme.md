@@ -12,9 +12,12 @@ The goal of the project is to showcase how an AI Agent can autonomously interact
 # Architecture
 
 ![Image](https://images.openai.com/static-rsc-4/ERuXMJjTN8GOBV3n64tDXzS5KHkLGmGF63JLjKAV7fYdvG8jlU47tHaUlEZ1oqxyoTzDdwUq9LdkCK6ipLLCI1F9-Gdp7yCt8wO7wk4JbczR5PgPZKnDlRvJWzAQLgYrtE-7BbNrvkbVR5suBrCBJoxEI9rsLTeN9gueXnvnqarewtgeY8dIxmFDBZLbFH_j?purpose=fullsize)
-# Watsap Bot Conversation 
 
-<img src="assets/AI_Agent_watsap_1.png" width="400"/> 
+# Images shows Real Conversation between Watsap BOT and Users
+<img src="assets/AI_Agent_watsap_1.png" width="600"/> 
+<img src="assets/AI_Agent_watsap_2.png" width="600"/> 
+<img src="assets/AI_Agent_watsap_3.png" width="600"/> 
+<img src="assets/AI_Agent_watsap_4.png" width="600"/> 
 
 The workflow is composed of the following nodes:
 
