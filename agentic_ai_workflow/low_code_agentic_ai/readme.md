@@ -1,6 +1,11 @@
-# Agentic AI Workflow with WhatsApp and n8n
+# Development of Uninettuno Student Administration Office 
 
 ## Overview
+Project provide Fully Orchestrated AI Automated Worflow that helps Uninettuno University Student Office to handle and organize collaborations with students. Project is developed and designed for following business use cases
+1. Based on User's request, Watsap BOT has to provide relevant information
+2. Watsap Bot is organizzed to deliver general information related to University, its services and public available informations
+3. Watsap Bot is organizzed to allow user to book appointments, update and cancel based on their relivant request and according to UNIVERSITY Student Office availiblity.
+4. Based on Scheduled meetings, Univerisity Student Office Google Calenders will get notified and managed accordingly
 
 This project demonstrates the implementation of an Agentic AI Workflow using the low-code automation platform [n8n](https://n8n.io?utm_source=chatgpt.com).
 The system integrates WhatsApp messaging, a locally hosted Large Language Model through [Ollama](https://ollama.com?utm_source=chatgpt.com), conversational memory, and external tools such as Wikipedia and a Calculator.
@@ -18,6 +23,9 @@ The goal of the project is to showcase how an AI Agent can autonomously interact
 <img src="assets/AI_Agent_watsap_2.png" width="600"/> 
 <img src="assets/AI_Agent_watsap_3.png" width="600"/> 
 <img src="assets/AI_Agent_watsap_4.png" width="600"/> 
+
+**PLEASE REFER TO JSON FILE ATTACHED : DOWNLOAD AND OPEN IT IN N8N PLATFORM TO GET TECHNICAL INSIGHTS**
+[Scarica il documento](Intelligent_WatsapBot_Uninettuno_Segreteria/Fully_Autonomous_WatsapBOT.json)
 
 The workflow is composed of the following nodes:
 
