@@ -1,6 +1,6 @@
 
 
-from agents.base_agent import BaseAgent
+from ..agents.base_agent import BaseAgent
 
 
 
@@ -15,10 +15,10 @@ class OptimizationAgent(BaseAgent):
             model = "llama3.2:latest",
             name="code_optimization",
             description="Optimize and Generate risponse to User",
-            instructions=["Your task is read and understand Optimization techniques based on given report from ReportAgent\n",
-                "Generate and clear out all possible optimization technuques to user \n",
-                "Be friendly and gentile , engaging.\n",
-                "Conclude your response with encouraging statements"],
+            instructions=("Your task is read and understand Optimization techniques based on given report from ReportAgent\n"
+                "Based on this report:\n{code_report_generator_result}\n\n"  # ← output_key di ReportAgent
+                "Provide clear optimization techniques. Be friendly and encouraging."
+                "Conclude your response with encouraging statements"),
             tools=[]
         )
 

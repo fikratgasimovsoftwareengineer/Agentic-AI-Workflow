@@ -1,13 +1,9 @@
-import json
+
 from abc import ABC, abstractmethod
-import pydantic
+
 
 class IDentifiable(ABC):
-    model:str
-    name:str
-    instructions:str
-    description:str
-    
+ 
     ## MODEL ##
     @property
     @abstractmethod
@@ -22,19 +18,20 @@ class IDentifiable(ABC):
     ## NAME ##
     @property
     @abstractmethod
-    def name(self)->str:
-        pass
+    def name(self) -> str: pass
 
     @name.setter
-    def name(self, agent_name:str):
-        pass
+    @abstractmethod
+    def name(self, value: str): pass
     
     ## DESCRIPTION ##
     @property
     @abstractmethod
     def description(self)->str:
         pass
+    
     @description.setter
+    @abstractmethod
     def description(self, description:str):
         pass
 
@@ -46,6 +43,7 @@ class IDentifiable(ABC):
         pass
     
     @instructions.setter
+    @abstractmethod
     def instructions(self, instructions:str):
         pass
 
@@ -56,19 +54,20 @@ class IExecutable(ABC):
     
 class IToolable(ABC):
     ## tools ##
-    @property
+    """     @property
     @abstractmethod
     def tools(self)->list:
         pass
     
     @tools.setter
+    @abstractmethod
     def tools(self, list_of_tools:list):
-        pass
+        pass """
     
     @abstractmethod
     def _execute_tools(self, tool_name:str, tools_args:str):
         pass
     
-class IBaseAgents(IDentifiable, IToolable):
+class IBaseAgents(IToolable):
     pass # composizion della interfaccia
     
