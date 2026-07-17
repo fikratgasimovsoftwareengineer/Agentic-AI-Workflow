@@ -1,6 +1,7 @@
 ollama
 google-adk
 mlflow
+litellm
 #Utilities
 python-dotenv>=1.0.0
 pydantic>=2.0.0

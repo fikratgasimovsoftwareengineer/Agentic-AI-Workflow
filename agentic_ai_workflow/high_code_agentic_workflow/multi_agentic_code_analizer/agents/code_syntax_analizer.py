@@ -1,6 +1,5 @@
 
-
-from agents.base_agent import BaseAgent
+from ..agents.base_agent import BaseAgent
 
 
 
@@ -13,10 +12,11 @@ class CodeSyntaxAnalyzerAgent(BaseAgent):
             model = "qwen3.5:9b",
             name="code_syntax_analizer",
             description="Analze given code and find out possible logical errors",
-            instructions=["Your task is to analyze the syntax of the given code "
+            
+            instructions=("Your task is to analyze the syntax of the given code "
                 "and identify any syntax errors or flaws in reasoning.\n"
                 "Provide the syntax errors found in clear bullet points.\n"
-                "If no syntax errors are found, state that explicitly."],
+                "If no syntax errors are found, state that explicitly."),
             tools=[]
         )
 

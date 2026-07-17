@@ -26,3 +26,33 @@ reasonerhub/
 ```sh
 mlflow server --host 127.0.0.1 --port 5000
 ```
+
+```sh
+LA DOMANDA (codice utente)
+        │
+        ▼
+   input: codice
+   ┌─────┴─────┐
+   ▼           ▼
+CodeSyntax  CodeLogic       ← parallelo (analizzano insieme)
+Analyzer    Analyzer
+   └─────┬─────┘
+         ▼
+CodeReportGenerator         ← riceve output di entrambi
+         │
+         ▼
+OptimizationAgent           ← genera risposta finale
+         │
+         ▼
+       Actor (utente)
+
+```
+```sh
+Hai costruito da zero un sistema multi-agente reale, funzionante, con:
+
+Architettura SOLID (interfacce + BaseAgent + specializzati)
+ADK + LiteLLM + Ollama locale (nessun costo API)
+Pipeline SequentialAgent + ParallelAgent
+Passaggio dati tra agenti tramite session.state con output_key
+Trace completo di ogni step
+```
