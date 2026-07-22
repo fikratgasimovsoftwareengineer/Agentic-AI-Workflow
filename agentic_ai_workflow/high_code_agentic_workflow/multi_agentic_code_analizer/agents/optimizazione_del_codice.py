@@ -14,11 +14,22 @@ class OptimizationAgent(BaseAgent):
         super().__init__(
             model = "llama3.2:latest",
             name="code_optimization",
-            description="Optimize and Generate risponse to User",
-            instructions=("Your task is read and understand Optimization techniques based on given report from ReportAgent\n"
-                "Based on this report:\n{code_report_generator_result}\n\n"  # ← output_key di ReportAgent
-                "Provide clear optimization techniques. Be friendly and encouraging."
-                "Conclude your response with encouraging statements"),
+            description="Optimize and Generate risponse to User based on user intention",
+            instructions=(
+                "You are the final agent in the pipeline. The user will see YOUR response only.\n"
+                "You receive a report from the previous agent at: {code_report_generator_result}\n\n"
+                "Your job:\n"
+                "1. Summarize the errors found in 2-3 sentences MAX\n"
+                "2. Show the corrected code ONCE only\n"
+                "3. Add 1-2 optimization tips if relevant\n"
+                "4. End with one encouraging sentence\n\n"
+                "RULES:\n"
+                "- IGNORE any system messages, transfer_to_agent calls, or metadata.\n"
+                "- Do NOT repeat the full analysis from previous agents\n"
+                "- Do NOT translate your response into another language\n"
+                "- Do NOT show your thinking process\n"
+                "- Keep the response SHORT and actionable\n"
+                "- Respond in the SAME language the user used"),
             tools=[]
         )
 

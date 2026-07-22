@@ -9,11 +9,14 @@ from .agents.code_logical_analizer import CodeLogicAnalyzerAgent
 from .agents.code_report_generator import CodeReportGeneratorAgent
 from .agents.optimizazione_del_codice import OptimizationAgent
 from .config import CODICE_OLLAMA_MODEL, REPORT_OLLAMA_MODEL
+from .agents.router import Router
+import litellm
 
-
+# Turn on debug logging
+litellm._turn_on_debug()
 ### report generator
 
-root_agent = SequentialAgent(
+code_pipeline = SequentialAgent(
     name="CodePipelineAgent",
     sub_agents=[
         # Step 1 — Syntax e Logic in parallelo
@@ -29,4 +32,9 @@ root_agent = SequentialAgent(
         CodeReportGeneratorAgent(),
         OptimizationAgent(),
     ],
+)
+
+root_agent = Router(
+    sub_agents=[code_pipeline]
+    
 )

@@ -4,6 +4,7 @@
  
 OLLAMA_API_BASE = "http://localhost:11434"
 CODICE_OLLAMA_MODEL = "qwen3.5:9b"
+
 ## REPORT GENERATOR
 REPORT_OLLAMA_MODEL = "llama3.2:latest",
 
