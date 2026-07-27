@@ -1,1 +1,7 @@
 agents_venv/
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/labs_venv
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/__pycache__
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/.env
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/tools/__pycache__/
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/domain/__pycache__/
+agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/agents/__pycache__/
