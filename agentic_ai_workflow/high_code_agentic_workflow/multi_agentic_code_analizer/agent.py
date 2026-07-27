@@ -24,7 +24,7 @@ code_pipeline = SequentialAgent(
             name="ParallelAnalysis",
             description="Analizza sintassi e logica del codice in parallelo.",
             sub_agents=[
-                CodeSyntaxAnalyzerAgent(),
+                CodeSyntaxAnalyzerAgent(),  
                 CodeLogicAnalyzerAgent()
             ],
         ),
