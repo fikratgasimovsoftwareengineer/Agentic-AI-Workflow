@@ -1,0 +1,8 @@
+langchain
+langgraph
+langsmith
+langchain-core
+langchain-ollama
+python-dotenv
+pydantic
+pydantic-settings

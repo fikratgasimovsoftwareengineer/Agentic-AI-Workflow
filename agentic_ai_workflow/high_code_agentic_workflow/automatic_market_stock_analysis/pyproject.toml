@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "automatic_market_stock_analysis"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "langchain",
+    "langgraph",
+    "langsmith",
+    "langchain-core",
+    "langchain-ollama",
+    "python-dotenv",
+    "pydantic",
+    "pydantic-settings",
+]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
