@@ -18,8 +18,8 @@ class Classification(BaseModel):
     
 class AgentOutput(TypedDict):
     """risultati prodotti da un ramo di ricerca"""
-    intent_type:Category
-    output:json
+    intent_type: Category
+    output:str
 
 class RouterState(TypedDict):
     query:str
