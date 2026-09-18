@@ -5,21 +5,20 @@ from pydantic import BaseModel,Field
 
 Category = Literal["technology", "economics", "jobs", "sport", "scientific_research"]
 
-class AgentInput(TypedDict):
+class AgentInput(TypedDict):    
     """Svolgersi nella gestione della domanda"""
     query:str
-    
-    
-class Classification(BaseModel):
-    """Output validato del classificatore """
-    type_of_request: Category
-    reasoning:str = Field(...,description="Perche` questa categoria")
-    
     
 class AgentOutput(TypedDict):
     """risultati prodotti da un ramo di ricerca"""
     intent_type: Category
     output:str
+
+class Classification(BaseModel):
+    """Output validato del classificatore """
+    type_of_request: Category
+    reasoning:str = Field(...,description="Perche` questa categoria")
+
 
 class RouterState(TypedDict):
     query:str

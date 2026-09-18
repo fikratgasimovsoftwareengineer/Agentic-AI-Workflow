@@ -1,4 +1,16 @@
 ```sh
+IntentAnalyzer  → Routing (+ Planning in v2)
+Research        → ReAct + Tool Use (+ Parallelization via Send)
+DataAnalysis    → Tool Use (+ Parallelization per i grafici)
+Writer          → Prompt chaining con contesto accumulato
+Critic↔Editor   → Reflection / Evaluator-Optimizer (con guardrail)
+FinalAnswer     → Human-in-the-Loop (interrupt) + output strutturato
+Supervisor      → Orchestrator-Workers + Routing vincolato
+Trasversale     → Guardrails, Strategy, Factory, Template Method, DI, Observer
+```
+
+
+```sh
 market-research-agent/
 ├── .env                          # variabili d'ambiente (chiavi, URL)
 ├── requirements.txt              # dipendenze pinnate
