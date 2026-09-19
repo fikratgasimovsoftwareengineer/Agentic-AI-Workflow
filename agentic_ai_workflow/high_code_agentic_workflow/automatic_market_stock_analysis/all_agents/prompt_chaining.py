@@ -64,10 +64,16 @@ workflow.add_edge("polish_joke", END)
 chain = workflow.compile()
 
 # Show workflow
-display(Image(chain.get_graph().draw_mermaid_png()))
+png_bytes = chain.get_graph().draw_mermaid_png()
 
-# Invoke
+with open('prompt_chaining.png', 'wb') as f:
+    f.write(png_bytes)
+    
+print("Diagramma salvato in diagramma.png")
+
+# Invoke, 
 state = chain.invoke({"topic": "cats"})
+
 print("Initial joke:")
 print(state["joke"])
 print("\n--- --- ---\n")
