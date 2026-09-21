@@ -7,7 +7,7 @@ from langgraph.types import Send
 from langgraph.graph import StateGraph, START, END
 
 ################################################################
-llm = ChatOllama(model="qwen3:8b", temperature=0)
+llm = ChatOllama(model="llama3.2:latest", temperature=0)
 
 class Section(BaseModel):
     name:str = Field(
@@ -29,8 +29,8 @@ planner = llm.with_structured_output(Sections)
 ###################################################################
 class State(TypedDict):
     topic:str
-    session:List[Section]
-    completed_section:Annotated[list, operator.add]
+    sections:List[Section]
+    completed_sections:Annotated[list, operator.add]
     final_report:str
     
 
@@ -99,11 +99,14 @@ orchestrator_worker_builder.add_node("synthesizer", synthesizer)
 
 # Add edges to connect nodes
 orchestrator_worker_builder.add_edge(START, "orchestrator")
+
+
 orchestrator_worker_builder.add_conditional_edges(
     "orchestrator", assign_workers, ["llm_call"]
 )
+
 orchestrator_worker_builder.add_edge("llm_call", "synthesizer")
-orchestrator_worker_builder.add_edge("synthesizer", END)
+orchestrator_worker_builder.add_edge("synthesizer", END) 
 
 # Compile the workflow
 orchestrator_worker = orchestrator_worker_builder.compile()
@@ -116,3 +119,12 @@ with open("multi_worker.png", 'wb') as f:
 
 # Invoke
 state = orchestrator_worker.invoke({"topic": "Create a report on LLM scaling laws"})
+print(state)
+st_items = state.get('sections',{})
+
+
+sec_names = ["".join(st_names.name) for st_names in st_items]
+print(sec_names)
+
+sec_decriptions = ["".join(st_section.description) for st_section in st_items]
+print(sec_decriptions) 
