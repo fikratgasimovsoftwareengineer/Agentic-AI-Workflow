@@ -10,3 +10,4 @@ Requires-Dist: langchain-ollama
 Requires-Dist: python-dotenv
 Requires-Dist: pydantic
 Requires-Dist: pydantic-settings
+Requires-Dist: tavily

@@ -6,3 +6,4 @@ langchain-ollama
 python-dotenv
 pydantic
 pydantic-settings
+tavily

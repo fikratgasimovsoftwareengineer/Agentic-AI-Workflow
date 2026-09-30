@@ -40,3 +40,29 @@ market-research-agent/
 │       └── builder.py            # assemblaggio del grafo
 └── tests/
 ```
+
+
+```sh
+query
+						  │
+						  ▼
+						┌──────────────────┐  PATTERN 1: ROUTER
+						│  INTENT ROUTER   │  "di cosa parla questa richiesta?"
+						│  (ResearchPlan)  │  -> categories + search_queries
+						└────────┬─────────┘
+						         │
+						         ▼           PATTERN 2: ORCHESTRATOR-WORKERS
+						┌──────────────────┐  il ResearchPlan E' il piano dell'orchestratore:
+						│  Send fan-out    │  una ricerca per query (i sotto-task non erano
+						└────────┬─────────┘  predefiniti: li ha generati il Router a runtime)
+						         │
+						    ┌────┼────┐
+						    ▼    ▼    ▼      WORKERS: i rami di ricerca Tavily (paralleli)
+						  [search][search][search]
+						    │    │    │
+						    └────┼────┘
+						         ▼
+						┌──────────────────┐  SYNTHESIZER: fonde i risultati in UN output
+						│  FINAL ANSWER    │  (results accumulati via operator.add)
+						└──────────────────┘
+```

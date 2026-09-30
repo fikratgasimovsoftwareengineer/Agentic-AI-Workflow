@@ -6,7 +6,7 @@ class Motore:
 
     def avvia(self):
         self.acceso = True
-        print("Vroooom! 🔥")
+        print("Vroooom! 🔥")    
 
 class Auto:
     def __init__(self, modello):
