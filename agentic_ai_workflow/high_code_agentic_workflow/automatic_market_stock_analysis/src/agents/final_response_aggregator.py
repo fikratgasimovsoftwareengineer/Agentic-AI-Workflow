@@ -14,7 +14,7 @@ class FinalResponseAggre:
             
         prompt = (
                     "il tuo ruolo e` di unire le risultati avvenuti in base alle domanda seguente\n"
-                    f"DOMANDA: ```{state['query']}```\n",
+                    f"DOMANDA: ```{state['query']}```\n"
                     f"RISULTATI DELLA RICERCA: ```{materiali}```\n"
                     "Scrivi una risposta unificata, chiara e strutturata, "
                     "citando le fonti (URL) alla fine."
