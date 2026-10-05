@@ -16,7 +16,7 @@ class TavilyResearchNode:
             for r in self._tavil_search.search_invoke(query):
                 results.append({
                     "intent_type":state['classification'].type_of_request,
-                    "output": f"{r.title} — {r.url}\n{r.content}",
+                    "output": f"{r.title} — {r.url}\n{r.content}"
                 })
                 
         return {"results":results}

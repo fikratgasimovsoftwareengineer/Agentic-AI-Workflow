@@ -1,6 +1,7 @@
 from src.interfaces.i_tavily_search import ITavilySearch
 from src.domain.search import SearchResults
 from dataclasses import dataclass
+
 # To install: pip install tavily-python
 from tavily import TavilyClient
 from src.config.app_settings import AppSettings

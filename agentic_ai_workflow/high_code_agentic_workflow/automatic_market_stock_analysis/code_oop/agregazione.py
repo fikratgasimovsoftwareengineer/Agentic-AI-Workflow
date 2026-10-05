@@ -10,7 +10,7 @@ class Squadra:
         self.giocatori = []
         
     def setGiocatori(self, giocatori:Giocatore): ## aggregazione
-        self.giocatori.append(giocatori.name)
+        self.giocatori.append(giocatori)
     
     def getGiocatori(self):
         return self.giocatori

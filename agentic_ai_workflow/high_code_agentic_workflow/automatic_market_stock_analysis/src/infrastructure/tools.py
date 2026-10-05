@@ -1,8 +1,5 @@
 from src.interfaces.i_tools import (
-    ISearchEconomics, 
-    ISearchJobs, 
-    ISearchScience, 
-    ISearchSport)
+    ISearchEconomics)
 from src.domain.models import AgentInput
 
 

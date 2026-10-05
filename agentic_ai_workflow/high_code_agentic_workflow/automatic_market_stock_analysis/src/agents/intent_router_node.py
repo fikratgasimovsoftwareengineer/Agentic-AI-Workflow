@@ -5,7 +5,6 @@ class IntentRouterNode:
     
     name="intent_router"
     
-    
     def __init__(self, llm:ILLMRouter):
         self._llm = llm
         

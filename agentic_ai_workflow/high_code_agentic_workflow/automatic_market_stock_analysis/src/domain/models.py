@@ -32,3 +32,7 @@ class RouterState(TypedDict, total=False):
     results: Annotated[list[AgentOutput], operator.add]
     final_answer:str
     
+
+## SRP: sintetizzare l'ultima risposta
+class FinalReport(BaseModel):
+    final_answer:str = Field(..., description="Risposta sintetica e strutturale ai risultati della ricerca")
