@@ -3,20 +3,32 @@ from src.domain.models import RouterState
 from src.config.app_settings import AppSettings
 from src.infrastructure.tavily_search import TavilySearch
 from langgraph.graph import StateGraph, START, END
-
+from dotenv import load_dotenv
+load_dotenv()          # ←
 ### agenti
 
 from src.agents.intent_router_node import IntentRouterNode
-from src.agents.tavil_research_node import TavilyResearchNode
+from src.agents.search_node import SearchWorkerNode
+from src.agents.dispatcher_agent import DispatcherAgent
 from src.agents.final_response_aggregator import FinalResponseAggre
+
 def main():
     
     appsettings = AppSettings()
     
     ## 1. composition 
-    intent_router = IntentRouterNode(OllamaRouter(appsettings))    
-    research_agent = TavilyResearchNode(TavilySearch(appsettings))
+    intent_router = IntentRouterNode(OllamaRouter(appsettings))  
+    
+    
+    #2. qui dispatche agent legge dal intent router: intent type e search_query
+    
+    dispatcher_agent = DispatcherAgent() 
+    
+    search_worker = SearchWorkerNode(TavilySearch(appsettings))
+    
 
+    #worker_agents = 
+    
     aggregator_agent = FinalResponseAggre(OllamaRouter(appsettings))
 
     # 2 grafo
@@ -25,25 +37,28 @@ def main():
     
     #### 3 construzione dei node
     builder.add_node("intent_router",intent_router)
-    builder.add_node("research_agent",research_agent)
+    builder.add_node("search_worker",search_worker)
     builder.add_node("aggregator_agent", aggregator_agent)
+    
     
     
     ### 4. construzione dei edge
     builder.add_edge(START, "intent_router")
-    builder.add_edge("intent_router", "research_agent")
-    builder.add_edge("research_agent", "aggregator_agent")
+    builder.add_conditional_edges("intent_router", 
+                                    dispatcher_agent,   
+                                    ["search_worker"])
+    builder.add_edge("search_worker", "aggregator_agent")
     builder.add_edge("aggregator_agent", END)
     
     graph = builder.compile()
         
-    """         
+             
     ### salvataggio del grafo
     png_bytes = graph.get_graph().draw_mermaid_png()
-    with open('graph.png', 'wb') as f:
+    with open('graph_orhestratore.png', 'wb') as f:
         f.write(png_bytes)
         
-    """
+    
     while True:
         domanda =  input("\nInserisci la domanda (o 'exit'): ").strip()
         if domanda.lower() == 'exit':
@@ -56,12 +71,7 @@ def main():
         print(result['final_answer'])
         
         
-        
-        """    print(f"{result.}")
-        for r in result['results']:
-            print(f"- {r['output'][:120]}...\n") """
-            
-    
+
 
         #"query":"Come sta evolvendo il mercato del lavoro tech in Europe
         

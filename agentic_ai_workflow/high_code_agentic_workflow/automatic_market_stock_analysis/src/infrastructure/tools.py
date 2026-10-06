@@ -1,4 +1,4 @@
-from src.interfaces.i_tools import (
+""" from src.interfaces.i_tools import (
     ISearchEconomics)
 from src.domain.models import AgentInput
 
@@ -17,3 +17,4 @@ def main():
 if __name__ == "__main__":
     main()
         
+ """

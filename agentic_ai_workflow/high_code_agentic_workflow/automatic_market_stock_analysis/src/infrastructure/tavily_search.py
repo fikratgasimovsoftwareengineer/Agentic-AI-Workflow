@@ -8,6 +8,7 @@ from src.config.app_settings import AppSettings
 from src.domain.search import SearchResults
 
 @dataclass
+#### QUESTO NODO DOVREBBE PARELLEIZZARE LA RICHIESTA ####
 class TavilySearch(ITavilySearch):
     
     

@@ -1,4 +1,4 @@
-from typing import Annotated, TypedDict,Literal
+from typing import Annotated, TypedDict,Literal, List
 import operator
 
 from pydantic import BaseModel,Field
@@ -26,13 +26,21 @@ class Classification(BaseModel):
 
 
 
+## send worker
+class SendTask(TypedDict):
+    search_query:str
+    intent_type:Category
+    
 class RouterState(TypedDict, total=False):
     query:str
     classification:Classification
     results: Annotated[list[AgentOutput], operator.add]
     final_answer:str
-    
+
+
 
 ## SRP: sintetizzare l'ultima risposta
 class FinalReport(BaseModel):
     final_answer:str = Field(..., description="Risposta sintetica e strutturale ai risultati della ricerca")
+    
+   
