@@ -2,6 +2,7 @@ from src.infrastructure.llm import OllamaRouter
 from src.domain.models import RouterState
 from src.config.app_settings import AppSettings
 from src.infrastructure.tavily_search import TavilySearch
+from src.infrastructure.evaluator import Evaluator
 from langgraph.graph import StateGraph, START, END
 from dotenv import load_dotenv
 load_dotenv()          # ←
@@ -11,6 +12,11 @@ from src.agents.intent_router_node import IntentRouterNode
 from src.agents.search_node import SearchWorkerNode
 from src.agents.dispatcher_agent import DispatcherAgent
 from src.agents.final_response_aggregator import FinalResponseAggre
+
+from src.agents.routing import routing_validator_node
+from src.agents.evalutor_agent import EvaluatorAgent
+
+
 
 def main():
     
@@ -30,6 +36,8 @@ def main():
     #worker_agents = 
     
     aggregator_agent = FinalResponseAggre(OllamaRouter(appsettings))
+    
+    evaluator_agent = EvaluatorAgent(Evaluator(OllamaRouter(appsettings)))
 
     # 2 grafo
     builder = StateGraph(RouterState)
@@ -39,6 +47,7 @@ def main():
     builder.add_node("intent_router",intent_router)
     builder.add_node("search_worker",search_worker)
     builder.add_node("aggregator_agent", aggregator_agent)
+    builder.add_node("evaluator_agent", evaluator_agent)
     
     
     
@@ -47,8 +56,15 @@ def main():
     builder.add_conditional_edges("intent_router", 
                                     dispatcher_agent,   
                                     ["search_worker"])
+    
     builder.add_edge("search_worker", "aggregator_agent")
-    builder.add_edge("aggregator_agent", END)
+    builder.add_edge("aggregator_agent", "evaluator_agent")
+    builder.add_conditional_edges(
+        "evaluator_agent",
+        routing_validator_node,
+        {"final_response_aggregator":"aggregator_agent", END:END}
+    )
+    #builder.add_edge("aggregator_agent", END)  
     
     graph = builder.compile()
         
@@ -57,7 +73,7 @@ def main():
     png_bytes = graph.get_graph().draw_mermaid_png()
     with open('graph_orhestratore.png', 'wb') as f:
         f.write(png_bytes)
-        
+         
     
     while True:
         domanda =  input("\nInserisci la domanda (o 'exit'): ").strip()

@@ -36,6 +36,10 @@ class RouterState(TypedDict, total=False):
     classification:Classification
     results: Annotated[list[AgentOutput], operator.add]
     final_answer:str
+    # feedback #
+    grade:str
+    feedback:str
+    revision_count:int # guardrails antiloop infinito!
 
 
 
@@ -43,4 +47,14 @@ class RouterState(TypedDict, total=False):
 class FinalReport(BaseModel):
     final_answer:str = Field(..., description="Risposta sintetica e strutturale ai risultati della ricerca")
     
+    
+    
+### Feedback ###
+class Feedback(BaseModel):
+    grade:Literal["approved", "needs_revision"] = Field(
+        description="approved se la risposta e` completa, accurata e cita la fonte; needs_revision altrimenti"
+    )
+    feedback:str=Field(
+        description="Se needs_revision, cosa manca e come migliorare la risposta"
+    )
    
