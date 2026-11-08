@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: climate-ai-management
+Version: 0.1.0
+Summary: Analyze,Summarize and Audit Carbon footprint documents for South Pole
+Requires-Python: <3.14,>=3.11
+Requires-Dist: google-adk
+Requires-Dist: google-genai
+Requires-Dist: fastapi
+Requires-Dist: uvicorn[standard]
+Requires-Dist: pydantic>=2
+Requires-Dist: pydantic-settings
+Requires-Dist: python-dotenv
+Requires-Dist: pymupdf

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "climate-ai-management"
+version = "0.1.0"
+description = "Analyze,Summarize and Audit Carbon footprint documents for South Pole"
+requires-python = ">=3.11,<3.14"
+
+dependencies = [
+    "google-adk",
+    "google-genai",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic>=2",
+    "pydantic-settings",
+    "python-dotenv",
+    "pymupdf"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
