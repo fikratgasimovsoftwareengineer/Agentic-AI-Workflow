@@ -12,21 +12,22 @@ class ExtractionSchema(BaseModel):
         description="Company name extracted from the document"
     )
     
-    year:str|None = Field(
+    year:int | None = Field(
         description= "The reporting the year"
     )
     
-    scope_1_tcoe2:float | None = Field(
+    scope_1_tco2e:float | None = Field(
         ge=0,
         description="Scope 1 emissions in the tonnes of CO2 equivalent"
     )
     
-    scope_2_tcoe2:float | None = Field(
+    scope_2_tco2e:float | None = Field(
         ge=0,
         description="Scope 2 emissions in tonnes of CO2 equivalent"
     )
     
     scope_3_tco2e: float | None = Field(
+        default=None,
         ge=0,
         description="Scope 3 emissions in tonnes of CO2 equivalent"
     )

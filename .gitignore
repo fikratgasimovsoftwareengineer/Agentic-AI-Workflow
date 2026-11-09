@@ -21,3 +21,6 @@ agentic_ai_workflow/high_code_agentic_workflow/google_adk_labs/labs_venv/
 agentic_ai_workflow/.env
 agentic_ai_workflow/high_code_agentic_workflow/automatic_market_stock_analysis/src.zip
 /home/fikrat/Agentic-AI-Workflow/agentic_ai_workflow/high_code_agentic_workflow/climate-ai-management/venv_climate
+agentic_ai_workflow/high_code_agentic_workflow/climate-ai-management/venv_climate/
+agentic_ai_workflow/high_code_agentic_workflow/climate-ai-management/src/climate_ai_management/agents/__pycache__/
+agentic_ai_workflow/high_code_agentic_workflow/climate-ai-management/.env

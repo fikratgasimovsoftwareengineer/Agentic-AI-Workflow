@@ -1,0 +1,55 @@
+{
+    "extracted_data": {
+        "company": "Demo Company",
+        "year": 2025,
+        "scope_1_tco2e": 120.0,
+        "scope_2_tco2e": 80.0,
+        "scope_3_tco2e": 15.0,
+        "declared_total_tco2": 250.0,
+        "evidence": [
+            "Company: Demo Company",
+            "Reporting year: 2025",
+            "Scope 1: 120 tCO2e",
+            "Scope 2: 80 tCO2e",
+            "Declared total emissions: 250 tCO2e",
+            "Scope 3: 15 tCO2e"
+        ],
+        "missing_fields": []
+    },
+    "analysis_result": {
+        "calculated_total_toco2e": 215.0,
+        "declared_total_toco2e": 250.0,
+        "difference_tco2e": -35.0,
+        "findings": [
+            "Sum of Scope 1 (120.0 tCO2e), Scope 2 (80.0 tCO2e), and Scope 3 (15.0 tCO2e) equals 215.0 tCO2e, which does not match the declared total of 250.0 tCO2e.",
+            "There is an unexplained shortfall of 35.0 tCO2e between the calculated sum and the declared total emissions."
+        ],
+        "limitations": [
+            "Declared total may incorporate additional Scope 3 categories or sources not specified in the extracted data.",
+            "Accounting methodology (e.g., location-based vs. market-based for Scope 2) and organizational boundaries are not fully detailed."
+        ],
+        "recommended_actions": [
+            "Verify whether the declared total includes non-reported Scope 3 categories or other greenhouse gas sources.",
+            "Reconcile the 35.0 tCO2e discrepancy with the reporting entity and request an itemized inventory reconciliation.",
+            "Confirm the accounting boundaries and methodology used for Scope 1, 2, and 3 reporting."
+        ]
+    },
+    "final_report": {
+        "executive_summary": "This environmental carbon footprint analysis examines the reported emissions inventory for Demo Company for the reporting year 2025. An evaluation of the reported figures reveals an inconsistency: the aggregate calculated sum of Scope 1, Scope 2, and Scope 3 emissions is 215.0 tCO2e, contrasting with the declared total emissions of 250.0 tCO2e. This leaves an unexplained difference of 35.0 tCO2e that requires reconciliation and further verification.",
+        "emissions_overview": "For the year 2025, Demo Company reported Scope 1 direct emissions of 120.0 tCO2e, Scope 2 indirect emissions of 80.0 tCO2e, and Scope 3 other indirect emissions of 15.0 tCO2e. The sum of these three scopes yields a calculated total of 215.0 tCO2e, whereas the reported declared total emissions figure stands at 250.0 tCO2e.",
+        "anomalies": [
+            "Sum of Scope 1 (120.0 tCO2e), Scope 2 (80.0 tCO2e), and Scope 3 (15.0 tCO2e) equals 215.0 tCO2e, which does not match the declared total of 250.0 tCO2e.",
+            "There is an unexplained shortfall of 35.0 tCO2e between the calculated sum and the declared total emissions."
+        ],
+        "limitations": [
+            "Declared total may incorporate additional Scope 3 categories or sources not specified in the extracted data.",
+            "Accounting methodology (e.g., location-based vs. market-based for Scope 2) and organizational boundaries are not fully detailed."
+        ],
+        "recommendations": [
+            "Verify whether the declared total includes non-reported Scope 3 categories or other greenhouse gas sources.",
+            "Reconcile the 35.0 tCO2e discrepancy with the reporting entity and request an itemized inventory reconciliation.",
+            "Confirm the accounting boundaries and methodology used for Scope 1, 2, and 3 reporting."
+        ],
+        "disclaimer": "This is a preliminary, non-certified result based strictly on provided and extracted self-reported figures. It does not constitute a formal third-party audit or certified carbon verification."
+    }
+}
