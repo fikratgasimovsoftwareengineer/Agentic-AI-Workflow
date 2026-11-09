@@ -1,5 +1,5 @@
 from climate_ai_management.agents.extraction_agent import build_extraction_agent
-
+from climate_ai_management.services.document_parser import parse_pdf, prepare_pdf_content_for_agent
 
 import asyncio
 
@@ -15,7 +15,13 @@ project_root = Path(__file__).resolve().parent.parent
 load_dotenv(project_root / '.env')
 
 APP_NAME = "climate_ai_management"
+
+
+
 async def main():
+    
+    project_root_document = parse_pdf("/home/fikrat/Agentic-AI-Workflow/agentic_ai_workflow/high_code_agentic_workflow/climate-ai-management/tests/files/carbon_footprint_sample_2025.pdf")
+    agent_input = prepare_pdf_content_for_agent(project_root_document)
     
     agent = build_extraction_agent(
         model="gemini-3.8-flash"
@@ -38,17 +44,10 @@ async def main():
     )
         
     
-    document = """
-        Company: Demo Company
-        Reporting year: 2025
-        Scope 1: 120 tCO2e
-        Scope 2: 80 tCO2e
-        Declared total emissions: 250 tCO2e
-        Scope 3: Not reported
-        """
+ 
     message = types.Content(
         role = "user",
-        parts=[types.Part(text=document)]
+        parts=[types.Part(text=agent_input)]
     )
     
     async for event in runner.run_async(
@@ -57,7 +56,7 @@ async def main():
         new_message=message
     ):
         
-        if event.is_final_response():
+        if event.is_final_response() and event.content:
             print("Final response: ", event.content)
             
     session = await session_service.get_session(

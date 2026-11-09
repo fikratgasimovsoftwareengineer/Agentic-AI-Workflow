@@ -3,7 +3,7 @@ from hashlib import sha256
 import pymupdf
 
 from climate_ai_management.schemas.document_schema import DocumentHandler
-
+import json
 def parse_pdf(file_path:str | Path)->DocumentHandler:
     
     path = Path(file_path)
@@ -47,4 +47,29 @@ def parse_pdf(file_path:str | Path)->DocumentHandler:
         page_count=len(pages_data),
         page_block=pages_data
     )
+    
+    
+def prepare_pdf_content_for_agent(documentHandler:DocumentHandler)->str:
+    
+    
+    elaborate_page_content = []
+    doc_id = documentHandler.document_id
+    doc_filename = documentHandler.filename
+    
+    for pages in documentHandler.page_block:
+        page_number = pages.page_number
+        page_text = pages.page_text
+        
+        elaborate_page_content.append({
             
+            "Document ID":doc_id,
+            "Filename":doc_filename,
+            "PageNumber": page_number,
+            "Text":page_text
+        })
+        
+    return json.dumps(
+        elaborate_page_content,
+        ensure_ascii=False,
+        indent=2
+    )
