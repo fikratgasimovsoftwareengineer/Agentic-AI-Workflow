@@ -20,6 +20,10 @@ def validate_state(
 
             # Validate data against Pydantic schema
             schema.model_validate(data)
+            callback_context.state[
+                f"validation_{key}"
+            ] = "passed"
+                 
 
         return None
 

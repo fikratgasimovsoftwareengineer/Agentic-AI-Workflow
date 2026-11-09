@@ -31,7 +31,7 @@ def build_report_agent(model:str)->LlmAgent:
             "extracted_data" : ExtractionSchema,
             "analysis_result": AnalysisSchema
         }),
-        after_agent_callback=({
+        after_agent_callback=validate_state({
             "final_report":ReportSchema
         })
         

@@ -22,9 +22,8 @@ def build_analysis_agent(model:str)->LlmAgent:
         output_key="analysis_result",
         before_agent_callback=validate_state({
                 "extracted_data":ExtractionSchema
-            }
-            ),
-        after_agent_callback=({
+            }),
+        after_agent_callback=validate_state({
             "analysis_result":AnalysisSchema,
         }),
         
