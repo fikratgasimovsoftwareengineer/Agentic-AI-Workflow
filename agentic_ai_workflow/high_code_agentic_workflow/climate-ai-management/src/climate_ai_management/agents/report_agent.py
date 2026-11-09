@@ -1,5 +1,8 @@
 from google.adk.agents import LlmAgent
 from climate_ai_management.schemas.reporting_schema import ReportSchema
+from climate_ai_management.schemas.extration_schema import ExtractionSchema
+from climate_ai_management.schemas.analysis_schema import AnalysisSchema
+from climate_ai_management.callbacks.validation_callbacks import validate_state
 
 def build_report_agent(model:str)->LlmAgent:
     
@@ -23,6 +26,14 @@ def build_report_agent(model:str)->LlmAgent:
             
             ),
         output_schema=ReportSchema,
-        output_key="final_report"
+        output_key="final_report",
+        before_agent_callback=validate_state({
+            "extracted_data" : ExtractionSchema,
+            "analysis_result": AnalysisSchema
+        }),
+        after_agent_callback=({
+            "final_report":ReportSchema
+        })
+        
     )
 

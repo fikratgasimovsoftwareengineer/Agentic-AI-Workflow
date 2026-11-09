@@ -1,6 +1,8 @@
 from google.adk.agents import LlmAgent
 from climate_ai_management.schemas.extration_schema import ExtractionSchema
 
+### controllo before agent ###
+from climate_ai_management.callbacks.validation_callbacks import validate_state
 
 def build_extraction_agent(model:str)->LlmAgent:
 
@@ -20,5 +22,8 @@ def build_extraction_agent(model:str)->LlmAgent:
             "Return data matching the required output schema."
         ),
         output_schema=ExtractionSchema,
-        output_key="extracted_data"
+        output_key="extracted_data",
+        after_agent_callback=validate_state({
+            "extracted_data":ExtractionSchema
+        })
     )
