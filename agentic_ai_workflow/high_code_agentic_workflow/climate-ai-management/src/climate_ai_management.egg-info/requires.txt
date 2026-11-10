@@ -1,4 +1,5 @@
 google-adk
+google-adk[gcp]
 google-genai
 fastapi
 uvicorn[standard]
