@@ -1,6 +1,7 @@
 from google.adk.tools.tool_context import ToolContext
-import json
-import hashlib
+
+
+from climate_ai_management.services.report_manager_identity import generate_report_id
 
 def request_report_approval(tool_context:ToolContext):
     
@@ -15,8 +16,7 @@ def request_report_approval(tool_context:ToolContext):
         }
         
     ## convert report to json  to convert to json string ##
-    report_json = json.dumps(report)
-    report_id = hashlib.sha256(report_json.encode("utf-8")).hexdigest()
+    report_id = generate_report_id(report)
     
  
     tool_confirmation = tool_context.tool_confirmation
