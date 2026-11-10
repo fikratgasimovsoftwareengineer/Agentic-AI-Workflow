@@ -73,3 +73,30 @@ def prepare_pdf_content_for_agent(documentHandler:DocumentHandler)->str:
         ensure_ascii=False,
         indent=2
     )
+    
+    
+def parse_pdf_bytes(pdf_bytes: bytes) -> DocumentHandler:
+    document_id = sha256(pdf_bytes).hexdigest()
+    pages_data = []
+
+    with pymupdf.open(
+        stream=pdf_bytes,
+        filetype="pdf"
+    ) as document:
+
+        if document.needs_pass:
+            raise ValueError("Encrypted PDF is not supported")
+
+        for page_num, page in enumerate(document):
+            pages_data.append({
+                "page_number": page_num + 1,
+                "page_text": page.get_text("text", sort=True),
+                "layout": page.get_text("dict", sort=True)
+            })
+
+    return DocumentHandler(
+        document_id=document_id,
+        filename="uploaded_document.pdf",
+        page_count=len(pages_data),
+        page_block=pages_data
+    )
