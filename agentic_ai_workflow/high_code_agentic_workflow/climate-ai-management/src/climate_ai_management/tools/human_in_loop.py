@@ -2,6 +2,11 @@ from google.adk.tools.tool_context import ToolContext
 
 
 from climate_ai_management.services.report_manager_identity import generate_report_id
+from climate_ai_management.schemas.decision_model_validator import ModelValidator
+
+from google.adk.events import RequestInput
+
+
 
 def request_report_approval(tool_context:ToolContext):
     
@@ -20,19 +25,22 @@ def request_report_approval(tool_context:ToolContext):
     
  
     tool_confirmation = tool_context.tool_confirmation
-
+    
     # request human approval
     if not tool_confirmation:
         tool_context.request_confirmation(
             hint=("Please Review the Carbon Footprint report before pubblication. "
-                  f"Report ID {report_id[:12]}"
-                  "approve or reject the report."
+                  f"Report ID {report_id[:12]}\n"
+                  "Available decisions:\n"
+                  "- approve\n"
+                  "- reject\n"
+                  "- request_revision (provide a comment)\n"
                   ),
             payload={
                 "report_id":report_id,
-                "decision":"approve",
+                "decision":"pending",
                 "comment":""
-            }
+            } 
         )
         
         return {
@@ -40,31 +48,49 @@ def request_report_approval(tool_context:ToolContext):
             "report_id":report_id   
         }
         
-    # process human approval or reject
-    payload = tool_confirmation.payload or {}
+  
     
     if not tool_confirmation.confirmed:
-        decision = "reject"
-    else:
-        decision = payload.get("decision", "reject")
+        raw_decision = {
+            "report_id": report_id,
+            "decision": "reject",
+            "comment": ""
+        }
+    else:   
+         # process human approval or reject
+        raw_decision = tool_confirmation.payload or {}
+    
+    try:
+            
+        decision = ModelValidator.validate_review(raw_decision)
+    except ValueError as exc:
         
-    if (
-    payload.get("report_id") != report_id
-        or
-    decision not in ("approve", "reject")
-    ):
-         decision = "reject"
+        return {
+            "status":"INVALID_REVIEW",
+            "message":str(exc)
+        }
+        
+        
+    if decision.report_id != report_id:
+        return {
+            "status":"BLOCKED",
+            "reason":"REPORT_ID_MISMATCH"
+        }
          
     tool_context.state["report_approval"] = {
-        "report_id":report_id,
-        "decision":decision,
-        "comment": payload.get("comment", "")
+        decision.model_dump(mode="json")
     }
     
+    if decision.decision == "request_revision":
+        tool_context.state["revision_feedback"] =(decision.comment)
+    
+    
     return {
-        "status": (
-            "APPROVED"  if decision == "approve" else "REJECTED"
-        ),
-        "report_id":report_id
+       "status":decision.decision,
+       "report_id":report_id,
+       "comment":decision.comment
     }
+        
+        
+
         

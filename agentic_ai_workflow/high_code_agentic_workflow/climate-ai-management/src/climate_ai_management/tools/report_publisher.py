@@ -53,5 +53,6 @@ def publish_final_report(tool_context:ToolContext):
     return {
         "status":"PUBLISHED",
         "report_id": report_id,
-        "message":"The approved report has been published successfully."
+        "message":"The approved report has been published successfully.",
+        "report": final_report
     }                

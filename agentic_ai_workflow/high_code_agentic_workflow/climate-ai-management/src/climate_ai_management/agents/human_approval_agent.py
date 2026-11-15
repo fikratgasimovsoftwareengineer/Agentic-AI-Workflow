@@ -1,7 +1,7 @@
 from google.adk.agents import LlmAgent
 from climate_ai_management.tools.human_in_loop import request_report_approval
 from climate_ai_management.tools.report_publisher import publish_final_report
-
+from google.adk.events import RequestInput
 
 
 def build_human_approval_agent(model:str)->LlmAgent:
@@ -37,5 +37,4 @@ def build_human_approval_agent(model:str)->LlmAgent:
         ),
         tools=[request_report_approval, 
                publish_final_report]
-        
     )
