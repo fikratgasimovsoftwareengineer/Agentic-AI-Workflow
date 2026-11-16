@@ -3,7 +3,7 @@ from climate_ai_management.schemas.reporting_schema import ReportSchema
 from climate_ai_management.schemas.extration_schema import ExtractionSchema
 from climate_ai_management.schemas.analysis_schema import AnalysisSchema
 from climate_ai_management.callbacks.validation_callbacks import validate_state
-from google.adk.events import RequestInput
+
 def build_report_agent(model:str)->LlmAgent:
     
     return LlmAgent(
