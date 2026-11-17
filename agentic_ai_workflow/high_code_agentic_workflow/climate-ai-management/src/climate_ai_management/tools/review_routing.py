@@ -32,13 +32,35 @@ def route_review_decision(
         route=decision.decision,
     )
 
-
-def publish_final_report(context:Context,
-                         node_input : dict)->Event:
+  
+def elaborate_output_format(output:dict)->list:
     
+    output_population = []
+    for keys, values in output.items():
+        title = keys.replace("_", " ").upper()
+        
+        if isinstance(values, str):
+                
+            output_population.append(f"{title}: \n{values}\n")
+        elif isinstance (values, list):
+            body = "\n".join(f"- {v}" for v in values)
+            
+            output_population.append({
+                    (f"{title} \n{body}\n")
+                })
 
+    return ", ".join(map(str, output_population))
+
+
+def publish_final_report(context:Context)->Event:
+
+    
+   
     final_report = context.state.get("final_report")
     approval = context.state.get("report_approval")
+    
+    text_output = elaborate_output_format(final_report)
+    #output_format = elaborate_output_format(final_report)
     
     if not final_report:
         return {
@@ -69,18 +91,18 @@ def publish_final_report(context:Context,
         }
         
     
-    print(f"Approved : {approved_report_id}")
+    """print(f"Approved : {approved_report_id}")
     print(f"reportID : {report_id}")
-    print(f"decision : {decision}")
+    print(f"decision : {decision}") """
     if approved_report_id != report_id:
         return {
             "status": "BLOCKED",
             "reason": "REPORT_ID_MISMATCH",
             "message": "Approval does not match the current report."
         }
-
+    
     return Event( 
-            output={
+        output={
             "status": "PUBLISHED",
             "report_id": report_id,
         },
@@ -92,11 +114,12 @@ def publish_final_report(context:Context,
             },
      
         message = ("Carbon footprint report approved and published.\n"
-                   f"Report ID: {report_id}")
+                   f"Report ID: {report_id}"
+                   f"Last Output : {text_output}")
     )              
 
 
-def reject_report(context:Context, request_input:Any)->Event:
+def reject_report(context:Context)->Event:
     
     approval = context.state.get("report_approval")
     
@@ -119,9 +142,7 @@ def reject_report(context:Context, request_input:Any)->Event:
         message = ("Carbon footprint was rejected"
                 "and has not been published")
     )
-  
 
-    
 def prepare_revision(context:Context)->Event:
     
     

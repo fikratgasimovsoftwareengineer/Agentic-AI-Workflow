@@ -1,0 +1,25 @@
+
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ADK Web - Climate AI Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/venv_climate/bin/adk",
+      "python": "${workspaceFolder}/venv_climate/bin/python",
+      "args": [
+        "web",
+        "--no-reload",
+        "--host", "127.0.0.1",
+        "--port", "8000",
+        "src"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "subProcess": true,
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
