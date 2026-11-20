@@ -24,6 +24,16 @@ def build_report_agent(model:str)->LlmAgent:
             "This is a preliminary, non-certified result."
             "Return data matching the required output schema"
             
+            "Previous report\n"
+            "{final_report?}\n\n"
+            "Human revision feedback:\n"
+            "{revision_feedback?}\n\n"
+            "Reasoning Agent Revision Plan\n"
+            "{revision_plan?}\n\n"
+            "If a revision plan is available, use it to revise "
+            "the previous report.\n"
+            "If no revision plan is available, generate the initial report.\n"
+            
             ),
         output_schema=ReportSchema,
         output_key="final_report",

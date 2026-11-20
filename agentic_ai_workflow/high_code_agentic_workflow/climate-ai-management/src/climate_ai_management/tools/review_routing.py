@@ -59,6 +59,15 @@ def publish_final_report(context:Context)->Event:
     final_report = context.state.get("final_report")
     approval = context.state.get("report_approval")
     
+    
+    
+    if not final_report:
+        raise ValueError("Final report is missing")
+
+    if not approval:
+        raise ValueError("Human approval is missing")
+    
+    
     text_output = elaborate_output_format(final_report)
     #output_format = elaborate_output_format(final_report)
     
@@ -90,10 +99,7 @@ def publish_final_report(context:Context)->Event:
             "message": "The human reviewer did not approve the report."
         }
         
-    
-    """print(f"Approved : {approved_report_id}")
-    print(f"reportID : {report_id}")
-    print(f"decision : {decision}") """
+   
     if approved_report_id != report_id:
         return {
             "status": "BLOCKED",
@@ -142,33 +148,31 @@ def reject_report(context:Context)->Event:
         message = ("Carbon footprint was rejected"
                 "and has not been published")
     )
+def prepare_revision(context: Context) -> Event:
 
-def prepare_revision(context:Context)->Event:
-    
-    
     approval = context.state.get("report_approval")
+
     if not approval:
         raise ValueError("Human decision is missing")
-    
-    
+
     if approval.get("decision") != "request_revision":
         raise ValueError("Revision was not requested")
-    
-    print()
-    
+
     comment = approval.get("comment", "").strip()
-    
+
+    if not comment:
+        raise ValueError("Revision feedback is required")
+
     return Event(
-        output = {
-            "revision_feedback":comment
+        output={
+            "revision_feedback": comment
         },
-        
-        state= {
-            "revision_feedback":comment,
-            "report_approval":None,
-            "published_report":None,
-            "published_report_id":None,
-            "publication_status":"revision_required",
+        state={
+            "revision_feedback": comment,
+            "revision_plan": None,
+            "report_approval": None,
+            "published_report": None,
+            "published_report_id": None,
+            "publication_status": "revision_required",
         },
-        
     )

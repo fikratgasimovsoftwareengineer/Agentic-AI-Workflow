@@ -109,7 +109,8 @@ The application follows a graph-orchestrated multi-agent architecture.
 ```
 
 
-![Architettura](public/images/diagram_flow.png)
+![Architettura](public/images/climat_ai_managmenet_reasoning.png)
+
 The workflow uses shared session state to transfer structured information between agents. Conditional routing is driven by validated human decisions rather than autonomous LLM approval.
 
 ## 4. Multi-Agent Components
